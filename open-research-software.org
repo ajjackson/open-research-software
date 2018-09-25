@@ -1,0 +1,528 @@
+#    -*- mode: org -*-
+#+OPTIONS: reveal_center:t reveal_progress:t reveal_history:t reveal_control:t
+#+OPTIONS: reveal_mathjax:t reveal_rolling_links:t reveal_keyboard:t reveal_overview:t num:nil
+#+OPTIONS: reveal_width:1200 reveal_height:800
+#+OPTIONS: reveal_title_slide:"<h2>%t</h2><h2>%a</h2><h3>%e</h3>"
+#+OPTIONS: toc:nil
+#+REVEAL_ROOT: https://cdn.jsdelivr.net/reveal.js/3.0.0/
+#+REVEAL_MARGIN: 0.2
+#+REVEAL_MIN_SCALE: 0.5
+#+REVEAL_MAX_SCALE: 2.5
+#+REVEAL_TRANS: none
+#+REVEAL_THEME: solarized
+#+REVEAL_HLEVEL: 1
+#+REVEAL_EXTRA_CSS: ./presentation.css
+#+BEAMER_FRAME_LEVEL: 2
+
+#+TITLE: Building open research software
+#+AUTHOR: Adam J. Jackson
+#+EMAIL: adam.jackson@ucl.ac.uk
+
+* COMMENT notes
+
+** Open science
+
+** Open source
+   
+** Open source development
+   - Forking: large-scale example (libreoffice)
+   - Branching and git-flow
+   - Project management:
+     - Issue trackers
+       - Activity: find some issue trackers, what kind of issues exist?
+     - Pull/merge requests
+       - Activity: make a pull request to this presentation; give
+         issue tracker examples
+     - Mailing lists
+
+** Developing and maintaining projects
+   - script
+   - library
+   - large code
+
+
+* Introduction
+
+** About me
+   - MEng chemical engineering at University of Bath (2006-2011)
+   - MRes/PhD sustainable chemical technologies (Bath, 2011-2016)
+     - Computational materials chemistry with Prof Aron Walsh
+     - "Thermodynamics for practical kesterite photovoltaics"
+   - Post-doc in UCL Chemistry (Scanlon Materials Theory Group)
+     - Working on novel transparent conductors
+
+** About my programming
+   - Briefly exposed to BASIC at school
+   - Crash-course in Fortran in 2006
+   - Used some Matlab in undergrad
+   - Self-taught Python since 2011
+   - Tinkered with some other stuff (C, Lisp, Julia, ...)
+
+   #+REVEAL: split
+
+   - Never had a structured course beyond language basics
+   - Never been mentored by an experienced programmer
+   - Research uses significant amounts of supercomputer time
+     - High-performance academic codes licensed from other groups
+     - Mainly write code for setup and analysis
+
+** Talk overview
+   - Open science
+   - Open research software
+   - Project management
+   - Writing better code
+
+* Open Science
+
+** Open Science
+   #+BEGIN_QUOTE
+   Open Science is scholarly research that is collaborative,
+   transparent and reproducible and whose outputs are publicly
+   available.
+
+   - [[https://publications.europa.eu/en/publication-detail/-/publication/5b05b687-907e-11e8-8bc1-01aa75ed71a1][Some EU report]]
+   #+END_QUOTE
+
+   #+REVEAL: split
+
+   - In science we are usually building on previous work
+   - It sucks when we can't access that work!
+     - Papers
+     - Data
+     - Models
+   - For our funders, this is /inefficient/
+
+   #+REVEAL: split
+   Traditional model
+
+   #+ATTR_HTML: :style padding:20px; :alt Diagram of traditional funding/access model
+   [[./images/science-scheme1.png]]
+   #+REVEAL: split
+   Open science
+
+   #+ATTR_HTML: :style padding:20px; :alt Diagram of open science funding/access model
+   [[./images/science-scheme2.png]]
+   #+REVEAL: split
+
+
+   - UKRI (body including EPSRC, AHRC, Innovate UK, STFC...) expects
+     that articles funded by research councils will be freely
+     available online
+   - EPSRC requires a data access statement in publications
+     #+BEGIN_QUOTE
+     ... publicly funded research data should generally be made as widely
+     and freely available as possible in a timely and responsible
+     manner
+     #+END_QUOTE
+
+** Some vocab
+    - N 'R's (where N is 2, 3, 4 or 5)
+      - Rerun (same people, tinker with setup)
+      - Repeat (same people, same setup)
+      - Replicate (different people, same setup)
+      - Reproduce (different people, different setup)
+      - Reuse (similar setup, different experiment)
+    - /Some other presentations on this topic/
+      - [[https://www.slideshare.net/carolegoble/what-is-reproducibility-gobleclean][Carole Goble slides]]
+      - [[https://www.slideshare.net/gramian/rrr-replicability-reproducibility-reusability][Christian Himpe, MPI]]
+
+** Less vocab
+    - Reproducible outputs
+      - Improve /quality/ of research
+    - Reusable outputs
+      - Improve /efficiency/ of research
+
+** Reproducibility
+   - Provide sufficient information for others to reproduce results
+   - This should be the minimum standard for a scientific paper...
+   - In practice it's not easy!
+     - [[https://www.nature.com/news/1-500-scientists-lift-the-lid-on-reproducibility-1.19970][Survey results]]
+     - [[http://www.sciencemag.org/news/2017/01/rigorous-replication-effort-succeeds-just-two-five-cancer-papers][Cancer studies]]
+     - [[https://retractionwatch.com/][Retracted papers]]
+
+** Re-use
+   - Paper outputs: numbers are better than plots
+   - Databases: one large consistent set or aggregate of many
+   - Software: building powerful code takes time, should be /generalised/
+
+   - As a "re-user", the hardest part can be obtaining outputs
+     - Available on web :-)
+     - "Available by request" :-(
+
+** FAIR 
+   Principles for "scientific data management" 
+    https://www.nature.com/articles/sdata201618
+
+    - Findable
+      - Use persistent identifier
+      - Use metadata
+    - Available
+      - Retrievable by an open standard protocal
+    - Interoperable
+      - Format data in a formal, accessible way
+    - Reusable
+      - "richly described" and using community standards
+      - Usage license and detailed provenance
+
+*** COMMENT availability protip
+    #+REVEAL: split
+    #+ATTR_HTML: :width 40%
+    [[./images/protip-available.png]]
+
+    - Code: Github, Bitbucket, Gitlab...
+    - Data: Zenodo, Figshare, institutional repo, publisher...
+
+** Journal policies
+   - In response to research council pressure, journals are requiring more
+
+   - /Science/ data/code availability policy (2011)
+     #+BEGIN_QUOTE
+     All data necessary to understand, assess, and extend the
+     conclusions of the manuscript must be available to any reader of
+     Science. All computer codes involved in the creation or analysis
+     of data must also be available to any reader of Science. After
+     publication, all reasonable requests for data and materials must
+     be fulfilled. Any restrictions on the availability of data, codes,
+     or materials, including fees and original data obtained from other
+     sources (Materials Transfer Agreements), must be disclosed to the
+     editors upon submission…
+     #+END_QUOTE
+
+   #+REVEAL: split
+
+    In a recent study researchers requested data and code from a
+    random sample of 204 /Science/ papers...
+
+    https://doi.org/10.1073/pnas.1708290115
+
+   #+REVEAL: split
+
+    #+BEGIN_QUOTE
+    When you approach a PI for the source codes and raw data, you
+    better explain who you are, whom you work for, why you need the
+    data and what you are going to do with it.
+    #+END_QUOTE
+    #+BEGIN_QUOTE
+    I have to say that this is a very unusual request without any
+    explanation! Please ask your supervisor to send me an email with a
+    detailed, and I mean detailed, explanation.
+    #+END_QUOTE
+   #+REVEAL: split
+   #+BEGIN_QUOTE
+   Thank you for your interest in our paper. For the [redacted]
+   calculations I used my own code, and there is no public version of
+   this code, which could be downloaded. Since this code is not very
+   user-friendly and is under constant development I prefer not to
+   share this code.
+   #+END_QUOTE
+   #+BEGIN_QUOTE
+   R is a free software package available at www.r-project.org/ I used
+   R for the [redacted] models. As you probably know, [redacted] and
+   [redacted] are quite complicated. But I don’t have to tell you that
+   given that you are a statistics student! I used Matlab for the
+   geometry.
+   #+END_QUOTE
+
+   #+REVEAL: split
+   The policy has been tweaked, but was that really the problem?
+
+   [[./images/sciencemag-policy.png]]
+
+
+** Good practice
+   - Keep raw data
+   - Keep metadata
+   - Avoid proprietary data formats
+   - Automate everything
+   - Put it online
+
+
+* Open Research software
+
+** Research software
+   - 92% of academics use research software
+   - 69% say that their research would not be practical without it
+   - 56% develop their own software 
+     - (worryingly, 21% of those have no training in software development)
+
+   (Simon Hettrick, Deputy Director of SSI)
+   https://www.software.ac.uk/blog/2014-12-04-its-impossible-conduct-research-without-software-say-7-out-10-uk-researchers
+
+   #+REVEAL: split
+   #+ATTR_HTML: :width 50%
+    [[./images/ssi-logo.png]]
+
+    - Supporting research software community in the UK
+    - "Better software, better research"
+    - Training (partnership with Software Carpentry)
+    - Advocacy/policy (Research Software Engineers)
+    - Fellowship programme
+
+** Research software: the uncomfortable truth
+  #+REVEAL: split
+
+  Spreadsheets are software
+
+  #+REVEAL: split
+
+  Spreadsheets are (terrible) software
+
+  #+REVEAL: split
+
+  Spreadsheets are (terrible) software
+
+  - Mix data and processing
+  - Data cells and code cells look the same
+  - Errors can be hard to spot even in [[https://www.washingtonpost.com/news/wonk/wp/2013/04/16/is-the-best-evidence-for-austerity-based-on-an-excel-spreadsheet-error/][influential studies]]
+  - Difficult to document
+  - Difficult to test
+
+** Open Source
+   - Many programming languages (C, C++, Fortran, ...) are translated
+     (compiled) to /machine code/
+   - Software that is distributed as a machine code "binary" cannot
+     easily be inspected (e.g. Microsoft Office)
+   - Reading machine code is serious hacker territory
+
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+      #+ATTR_HTML: :width 60%
+      [[./images/hackers.jpg]]
+
+      Hackers (1995)
+#+REVEAL_HTML: </div>
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+      #+ATTR_HTML: :width 60%
+      [[./images/Cypher.jpg]]
+
+      The Matrix (1999)
+#+REVEAL_HTML: </div>
+
+
+   #+REVEAL: split
+   - Open Source means that the code can be examined as written
+   - Some programs (e.g. Python, shell scripts) are not compiled before they are run
+     - The source can /always/ be examined
+   - Open source in a literal sense helps reproducibility:
+     - exact process is exposed
+     - implementation details can be identified/test/replicated
+       - including bugs!
+   - Academic software is already /usually/ distributed as source
+
+   #+REVEAL: split
+
+   - Open source is not enough! Licensing matters.
+   - "Free Open Source Software (FOSS)" is
+     - generally "free" as in beer (gratis)
+     - always "free" as in /freedom/ (libre)
+
+   #+REVEAL: split
+#+REVEAL_HTML: <div class="column" style="float:left; width: 50%">
+      #+ATTR_HTML: :width 60%
+      [[./images/rms.jpg]]
+#+REVEAL_HTML: </div>
+
+#+REVEAL_HTML: <div class="column" style="float:right; width: 50%">
+#+BEGIN_QUOTE
+ If the users don't control the program, the program controls the
+ users. With proprietary software, there is always some entity, the
+ "owner" of the program, that controls the program and through it,
+ exercises power over its users. A nonfree program is a yoke, an
+ instrument of unjust power.
+#+END_QUOTE
+-- Richard Stallman
+
+#+REVEAL_HTML: </div>
+   #+REVEAL: split
+
+   Politics aside...
+
+   - Default copyright status:
+     - I have no right to distribute your code
+     - Neither of us has the right to distribute my modified version
+   - FOSS licenses give us the right to build on software and distribute it ourselves
+   - This is /essential/ for community development of a codebase
+   - In practice good changes can make it "upstream" or form a new code
+   - Hybrids are possible: paid academic license, community development
+
+   https://choosealicense.com/
+
+** Open source development
+
+   - Open source projects make heavy use of /version control/ features
+     - "Main" repository (e.g. on GitHub)
+     - Work on "branches" and "forked" copies
+     - Keep change history
+   - They require good communication and a sense of direction
+     - Communication channels
+     - Accepting contributions
+
+** Long-term example: OpenOffice
+
+   - Begin life as StarOffice (Sun Microsystems)
+   - Community branch OpenOffice runs in parallel
+   - When disagreements occurred, OpenOffice and LibreOffice exist in parallel
+   - LibreOffice survives!
+
+** Short-term example: Git-flow
+
+** Issue trackers
+
+   - Oh dear, this slide still needs some content!
+
+** Activity pt 1:
+   - Have a look at a project you care about
+     - Is there an Issue tracker? What kind of discussion happens there?
+     - Are there pull requests? How many are accepted?
+
+** Activity pt 2:
+   - Make a pull request to this presentation at
+     https://github.com/ajjackson/open-research-software
+
+     - Help me out with the "Issue trackers" slide!
+
+* Sustainable project management
+** Things found in a good project
+   - README / docs
+   - LICENSE
+   - CONTRIBUTING
+   - CHANGELOG
+   - INSTALL
+   - CITATION
+   - tests
+
+** README
+   - This document is usually your "homepage"
+   - Introduce the project
+   - Point to other resources
+
+  You should watch Daniele Procida's amazing talk about documentation
+  - Pycon video: https://www.youtube.com/watch?v=azf6yzuJt54
+  - Blog version https://www.divio.com/en/blog/documentation/
+
+  The following ideas are directly taken from it
+
+** Four types of documentation
+
+   - Tutorials
+   - How-to guides
+   - Explanation
+   - Reference
+
+** Four types of documentation
+   Daniele uses a wonderful cooking analogy for these:
+   - *Tutorials* "Teaching a small child to cook"
+   - *How-to guides* "A recipe in a book"
+   - *Explanation* "An article on culinary social history"
+   - *Reference* "A reference encyclopedia article"
+
+** Four types of documentation
+   - These do not need to be located in four different places
+   - They should all /exist/ and be findable at the right time
+
+
+** LICENSE
+   #+ATTR_REVEAL: :frag (appear)
+   - Licensing is complicated
+   - Don't make it more complicated by inventing your own
+   - Use of standard licenses makes it quicker and easier for users
+   - https://choosealicense.com/
+
+** CONTRIBUTING
+   - Are external contributions welcome?
+   - How should people interact with the project?
+   - Do you have style/format requirements?
+
+** CHANGELOG
+   Keep track of changes between different versions
+
+   https://keepachangelog.com
+
+** INSTALL
+   #+ATTR_REVEAL: :frag (appear)
+   - Try to make installation easy...
+   - ... but don't be /weird/ about it!
+   - =sudo= makes me nervous
+   - For Python projects, use setuptools
+   - For compiled languages, use a simple makefile or autoconf
+
+** CITATION
+   - This is cutting edge!
+   - There still isn't really a standard way to cite code...
+   #+ATTR_REVEAL: :frag t
+   - ... but there should be!
+   - [[https://citation-file-format.github.io/][Citation file format]] has been proposed. 
+     - Based on YAML: readability balanced for humans and machines
+     - Can include papers
+   - [[https://software.ac.uk/index.php/which-journals-should-i-publish-my-software][New journals are emerging]]
+
+** tests
+   - Don't re-invent the wheel, use an existing framework for
+     non-trivial testing
+   - "Continuous Integration" e.g. Travis CI automatically runs tests when changes are pushed to repository
+   - Coverage testing is depressing but helpful
+
+     #+ATTR_HTML: :width 60%
+     [[./images/badges.png]]
+
+* The actual coding bit
+
+** Some key skills
+   - Version control
+     - Learn how to use feature branches
+     - Write helpful commit messages
+
+   - Get good at editing
+     - Be lazy
+     - Use macros
+     - Use plugins
+
+** How to get better at programming
+   - A lot of this is just practice
+   - As with an instrument, practice only helps if it's /good/
+     practice
+   - Try different things:
+     - Test-driven development
+     - Use more objects
+     - Use less objects
+
+** How to get better at programming
+   - Programming is better with friends! It can be easier to spot an
+     elegant way of doing something in someone else's code
+   - Watch the issue tracker of a project you care about (e.g. ASE);
+     this is a great way to learn from other people and get your feet
+     wet with small contributions.
+
+** PROTIP: Write good code
+   - Use a style guide e.g. PEP8 for Python
+     - =pip install pep8= for a nifty program that checks your style
+   - Assume that someone else will see and tinker with your code. This
+     "someone else" is probably you in a year's time.
+
+
+** PROTIP: Write good code
+   - If developing a library or a code
+     - Plan out your overall structure and think carefully about the
+       flow of data
+     - Introduce tests as soon as a package becomes non-trivial
+
+** PROTIP: Write good code
+   #+ATTR_REVEAL: :frag (appear)
+   - Premature optimisation is evil
+     - (Don't speed up things that are "fast enough")
+   - Slow code is also evil
+     - (Try to keep a short loop of changing and testing)
+
+** PROTIP: Write good code
+   #+ATTR_REVEAL: :frag (appear)
+   - Don't let perfect get in the way of good
+   - Someone else can help you get from good to perfect
+
+* Summary
+
+** Summary
+   - Good science is open about its methods
+     - They probably involve software
+   - You're going to have to show people your software
+   - Good software is approachable and maintainable
+   - There is an overwhelming number of tools and options
+     - but you can start by imitating projects you like
