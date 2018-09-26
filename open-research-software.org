@@ -258,25 +258,6 @@
     - Advocacy/policy (Research Software Engineers)
     - Fellowship programme
 
-** Research software: the uncomfortable truth
-  #+REVEAL: split
-
-  Spreadsheets are software
-
-  #+REVEAL: split
-
-  Spreadsheets are (terrible) software
-
-  #+REVEAL: split
-
-  Spreadsheets are (terrible) software
-
-  - Mix data and processing
-  - Data cells and code cells look the same
-  - Errors can be hard to spot even in [[https://www.washingtonpost.com/news/wonk/wp/2013/04/16/is-the-best-evidence-for-austerity-based-on-an-excel-spreadsheet-error/][influential studies]]
-  - Difficult to document
-  - Difficult to test
-
 ** Open Source
    - Many programming languages (C, C++, Fortran, ...) are translated
      (compiled) to /machine code/
@@ -300,8 +281,8 @@
 
    #+REVEAL: split
    - Open Source means that the code can be examined as written
-   - Some programs (e.g. Python, shell scripts) are not compiled before they are run
-     - The source can /always/ be examined
+   - Python programs are generally not compiled before they are run
+     - Open-source by default!
    - Open source in a literal sense helps reproducibility:
      - exact process is exposed
      - implementation details can be identified/test/replicated
@@ -358,12 +339,18 @@
 
 ** Long-term example: OpenOffice
 
+   https://en.wikipedia.org/wiki/StarOffice#Derivatives
+
    - Begin life as StarOffice (Sun Microsystems)
-   - Community branch OpenOffice runs in parallel
-   - When disagreements occurred, OpenOffice and LibreOffice exist in parallel
+   - Community branch OpenOffice.org runs in parallel
+   - Alternate branch NeoOffice
+   - Split to Oracle OpenOffice.org and LibreOffice
    - LibreOffice survives!
 
 ** Short-term example: Git-flow
+   - "Feature branch" and "release" workflow is good practice
+   - In "Git flow" master branch is reserved for releases
+     https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow
 
 ** Issue trackers
 
@@ -374,6 +361,12 @@
      - Is there an Issue tracker? What kind of discussion happens there?
      - Are there pull requests? How many are accepted?
 
+   - Some project suggestions
+     - [[https://github.com/astropy/astropy][Astropy]]
+     - [[https://gitlab.com/ase/ase][Atomic simulations environment]]
+     - [[https://github.com/lammps/lammps][LAMMPS]]
+     - [[https://github.com/scikit-learn/scikit-learn][Scikit-learn]]
+
 ** Activity pt 2:
    - Make a pull request to this presentation at
      https://github.com/ajjackson/open-research-software
@@ -381,7 +374,28 @@
      - Help me out with the "Issue trackers" slide!
 
 * Sustainable project management
-** Things found in a good project
+** Research software: the uncomfortable truth
+  #+REVEAL: split
+
+  Spreadsheets are software
+
+  #+REVEAL: split
+
+  Spreadsheets are (terrible) software
+
+  #+REVEAL: split
+
+  Spreadsheets are (terrible) software
+
+  - Mix data and processing
+  - Data cells and code cells look the same
+  - Errors can be hard to spot even in [[https://www.washingtonpost.com/news/wonk/wp/2013/04/16/is-the-best-evidence-for-austerity-based-on-an-excel-spreadsheet-error/][influential studies]]
+  - Difficult to document
+  - Difficult to test
+  - Difficult to re-use safely
+
+
+** Things found in a great project
    - README / docs
    - LICENSE
    - CONTRIBUTING
@@ -390,16 +404,18 @@
    - CITATION
    - tests
 
-** README
+** README file
    - This document is usually your "homepage"
    - Introduce the project
    - Point to other resources
 
-  You should watch Daniele Procida's amazing talk about documentation
-  - Pycon video: https://www.youtube.com/watch?v=azf6yzuJt54
-  - Blog version https://www.divio.com/en/blog/documentation/
+** Documentation
 
-  The following ideas are directly taken from it
+   You should watch Daniele Procida's amazing talk about documentation
+   - Pycon video: https://www.youtube.com/watch?v=azf6yzuJt54
+   - Blog version https://www.divio.com/en/blog/documentation/
+
+   The following ideas are directly taken from it
 
 ** Four types of documentation
 
@@ -446,9 +462,9 @@
    - For compiled languages, use a simple makefile or autoconf
 
 ** CITATION
+   #+ATTR_REVEAL: :frag (appear)
    - This is cutting edge!
    - There still isn't really a standard way to cite code...
-   #+ATTR_REVEAL: :frag t
    - ... but there should be!
    - [[https://citation-file-format.github.io/][Citation file format]] has been proposed. 
      - Based on YAML: readability balanced for humans and machines
@@ -492,27 +508,26 @@
      this is a great way to learn from other people and get your feet
      wet with small contributions.
 
-** PROTIP: Write good code
+   #+REVEAL: split
    - Use a style guide e.g. PEP8 for Python
      - =pip install pep8= for a nifty program that checks your style
    - Assume that someone else will see and tinker with your code. This
      "someone else" is probably you in a year's time.
 
-
-** PROTIP: Write good code
+   #+REVEAL: split
    - If developing a library or a code
      - Plan out your overall structure and think carefully about the
        flow of data
      - Introduce tests as soon as a package becomes non-trivial
 
-** PROTIP: Write good code
+   #+REVEAL: split
    #+ATTR_REVEAL: :frag (appear)
    - Premature optimisation is evil
      - (Don't speed up things that are "fast enough")
    - Slow code is also evil
      - (Try to keep a short loop of changing and testing)
 
-** PROTIP: Write good code
+   #+REVEAL: split
    #+ATTR_REVEAL: :frag (appear)
    - Don't let perfect get in the way of good
    - Someone else can help you get from good to perfect
