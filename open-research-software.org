@@ -42,7 +42,6 @@
 
 
 * Introduction
-
 ** About me
    - MEng chemical engineering at University of Bath (2006-2011)
    - MRes/PhD sustainable chemical technologies (Bath, 2011-2016)
@@ -67,6 +66,8 @@
      - Mainly write code for setup and analysis
 
 ** Talk overview
+   https://ajjackson.github.io/open-research-software/
+
    - Open science
    - Open research software
    - Project management
