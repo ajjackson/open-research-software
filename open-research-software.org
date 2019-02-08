@@ -1,4 +1,4 @@
-#  18;43;23M18;43;23m-*- mode: org -*-
+# -*- mode: org -*-
 #+OPTIONS: reveal_center:t reveal_progress:t reveal_history:t reveal_control:t
 #+OPTIONS: reveal_mathjax:t reveal_rolling_links:t reveal_keyboard:t reveal_overview:t num:nil
 #+OPTIONS: reveal_width:1200 reveal_height:800
@@ -72,6 +72,8 @@
      - Visualise phonon eigenvectors from Phonopy
      - Wraps Blender and provides a simple GUI
 
+   [[./images/ascii-phonons-gui.png]]
+
    #+REVEAL: split
 
    #+REVEAL_HTML: <div class="column" style="float:left; width: 60%">  
@@ -112,8 +114,7 @@
 
    - Open science
    - Open research software
-   - Project management
-   - Writing better code
+   - Good practice in sustainable software
 
 * Open Science
 
@@ -522,6 +523,7 @@
      #+ATTR_HTML: :width 60%
      [[./images/badges.png]]
 
+
 * The actual coding bit
 
 # ** Some key skills
@@ -544,31 +546,31 @@
 #      - Use less objects
 
 ** How to get better at programming
-   - Programming is better with friends! It can be easier to spot an
-     elegant way of doing something in someone else's code
-   - Watch the issue tracker of a project you care about (e.g. ASE);
-     this is a great way to learn from other people and get your feet
-     wet with small contributions.
-   - Assume that someone else will see and tinker with your code. This
-     "someone else" is probably you in a year's time.
+  - Programming is better with friends! It can be easier to spot an
+    elegant way of doing something in someone else's code
+  - Watch the issue tracker of a project you care about (e.g. ASE);
+    this is a great way to learn from other people and get your feet
+    wet with small contributions.
+  - Assume that someone else will see and tinker with your code. This
+    "someone else" is probably you in a year's time.
 
-   # #+REVEAL: split
-   # - If developing a library or a code
-   #   - Plan out your overall structure and think carefully about the
-   #     flow of data
-   #   - Introduce tests as soon as a package becomes non-trivial
+  # #+REVEAL: split
+  # - If developing a library or a code
+  #   - Plan out your overall structure and think carefully about the
+  #     flow of data
+  #   - Introduce tests as soon as a package becomes non-trivial
 
-   # #+REVEAL: split
-   # #+ATTR_REVEAL: :frag (appear)
-   # - Premature optimisation is evil
-   #   - (Don't speed up things that are "fast enough")
-   # - Slow code is also evil
-   #   - (Try to keep a short loop of changing and testing)
+  # #+REVEAL: split
+  # #+ATTR_REVEAL: :frag (appear)
+  # - Premature optimisation is evil
+  #   - (Don't speed up things that are "fast enough")
+  # - Slow code is also evil
+  #   - (Try to keep a short loop of changing and testing)
 
-   #+REVEAL: split
-   #+ATTR_REVEAL: :frag (appear)
-   - Don't let perfect get in the way of good
-   - Someone else can help you get from good to perfect
+  #+REVEAL: split
+  #+ATTR_REVEAL: :frag (appear)
+  - Don't let perfect get in the way of good
+  - Someone else can help you get from good to perfect
 
 * Summary
 
